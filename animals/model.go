@@ -9,3 +9,9 @@ type Animals struct {
 	DtNasc  date.Date `db:"dt_nasc"`
 	OwnerId int       `db:"owner_id"`
 }
+
+type Filter struct {
+	OwnerId  int `json:"owner_id"`
+	AnimalId int `json:"animal_id"`
+	Especie  int `json:"especie"`
+}

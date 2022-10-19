@@ -9,7 +9,7 @@ import (
 func main() {
 
 	api.Make()
-	api.Use(log.Middleware())
+	//api.Use(log.Middleware())
 	api.UseCustomHTTPErrorHandler()
-	api.ProvideEchoInstance(sectional.AddRoutes)
+	//api.ProvideEchoInstance(sectional.AddRoutes)
 }
