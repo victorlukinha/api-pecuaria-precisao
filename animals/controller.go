@@ -33,3 +33,35 @@ func createAnimals(animal Animals) (Animals, error) {
 	return animal, nil
 
 }
+
+func updateAnimals(animal Animals) (Animals, error) {
+
+	tx := database.MustGetByFile(config.MYSQL_ENV).MustBegin()
+
+	animal, err := updateAnimalsDBTx(animal, tx)
+	if err != nil {
+		tx.Rollback()
+		return Animals{}, err
+	}
+
+	tx.Commit()
+
+	return animal, nil
+
+}
+
+func deleteAnimals(animalId int) error {
+
+	tx := database.MustGetByFile(config.MYSQL_ENV).MustBegin()
+
+	err := deleteAnimalsDBTx(animalId, tx)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	tx.Commit()
+
+	return nil
+
+}

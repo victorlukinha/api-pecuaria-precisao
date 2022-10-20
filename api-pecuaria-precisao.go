@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/eucatur/go-toolbox/api"
+	"v1/animals"
+	"v1/log"
 	//"github.com/eucatur/go-toolbox/env"
 	//"github.com/eucatur/go-toolbox/redis"
 )
@@ -9,8 +11,8 @@ import (
 func main() {
 
 	api.Make()
-	//api.Use(log.Middleware())
+	api.Use(log.Middleware())
 	api.UseCustomHTTPErrorHandler()
-	//api.ProvideEchoInstance(sectional.AddRoutes)
+	api.ProvideEchoInstance(animals.AddRoutes)
 	api.Run()
 }
