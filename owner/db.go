@@ -29,7 +29,7 @@ func createOwnerDBTx(owner Owner, tx *sqlx.Tx) (Owner, error) {
 	query := `INSERT INTO owner (nome, cpf)
 		VALUES (?, ?)`
 
-	result, err := tx.Exec(query, owner.Nome, owner.Cpf)
+	result, err := tx.Exec(query, owner.Nome, owner.CPF)
 	if err != nil {
 		return Owner{}, err
 	}
