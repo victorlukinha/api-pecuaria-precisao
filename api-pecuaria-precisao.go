@@ -12,4 +12,5 @@ func main() {
 	//api.Use(log.Middleware())
 	api.UseCustomHTTPErrorHandler()
 	//api.ProvideEchoInstance(sectional.AddRoutes)
+	api.Run()
 }

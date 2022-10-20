@@ -1,12 +1,17 @@
 package animals
 
+import (
+	"github.com/eucatur/go-toolbox/database"
+	"github.com/victorlukinha/api-pecuaria-precisao/config"
+)
+
 func getAnimalsByFilter(filter Filter) ([]Animals, error) {
 	return getAnimalsByFilterTx(filter)
 }
 
 func getAnimalsByFilterTx(filter Filter) ([]Animals, error) {
 
-	tx := db.MustBegin()
+	tx := database.MustGetByFile(config.MYSQL_ENV).MustBegin()
 	defer tx.Rollback()
 
 	return getAnimalsByFilterDBTx(filter, tx)
@@ -15,7 +20,7 @@ func getAnimalsByFilterTx(filter Filter) ([]Animals, error) {
 
 func createAnimals(animal Animals) (Animals, error) {
 
-	tx := db.MustBegin()
+	tx := database.MustGetByFile(config.MYSQL_ENV).MustBegin()
 
 	animal, err := createAnimalsDBTx(animal, tx)
 	if err != nil {
