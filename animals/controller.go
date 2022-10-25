@@ -28,6 +28,8 @@ func createAnimals(animal Animals) (Animals, error) {
 		return Animals{}, err
 	}
 
+	err = updatePesoDBTx(animal.Id, animal.Peso, tx)
+
 	tx.Commit()
 
 	return animal, nil
@@ -55,6 +57,22 @@ func deleteAnimals(animalId int) error {
 	tx := database.MustGetByFile(config.MYSQL_ENV).MustBegin()
 
 	err := deleteAnimalsDBTx(animalId, tx)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	tx.Commit()
+
+	return nil
+
+}
+
+func updatePeso(animalId int, peso float64) error {
+
+	tx := database.MustGetByFile(config.MYSQL_ENV).MustBegin()
+
+	err := updatePesoDBTx(animalId, peso, tx)
 	if err != nil {
 		tx.Rollback()
 		return err

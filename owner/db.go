@@ -1,6 +1,8 @@
 package owner
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+)
 
 func getOwnerDBTx(filter Filter, tx *sqlx.Tx) (Owner, error) {
 	var owner Owner

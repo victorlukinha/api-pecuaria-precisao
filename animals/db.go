@@ -13,6 +13,7 @@ func getAnimalsByFilterDBTx(filter Filter, tx *sqlx.Tx) ([]Animals, error) {
     especie,
     raca,
     dt_nasc,
+    (select peso from pesohistorico where animal_id = animals.id order by id desc limit 1) as peso,
     owner_id
     FROM animals
     WHERE true`
@@ -48,7 +49,7 @@ func createAnimalsDBTx(animal Animals, tx *sqlx.Tx) (Animals, error) {
 
 	query :=
 		`INSERT INTO animals (especie, raca, dt_nasc, owner_id)
-		VALUES (?, ?, ?, ?)`
+		VALUES (?, ?, ?, ?, ? )`
 
 	result, err := tx.Exec(query, animal.Especie, animal.Raca, animal.DtNasc, animal.OwnerId)
 	if err != nil {
@@ -88,6 +89,18 @@ func deleteAnimalsDBTx(animalId int, tx *sqlx.Tx) error {
 	query := `DELETE FROM animals WHERE animal_id = ?`
 
 	_, err := tx.Exec(query, animalId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func updatePesoDBTx(animalId int, peso float64, tx *sqlx.Tx) error {
+
+	query := `INSERT INTO pesohistorico (animal_id, peso, data_pesagem) VALUES (?, ?,current_date())`
+
+	_, err := tx.Exec(query, animalId, peso)
 	if err != nil {
 		return err
 	}

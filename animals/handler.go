@@ -64,3 +64,16 @@ func DeleteHandler(c echo.Context) error {
 
 	return c.JSON(200, "Animal deletado com sucesso.")
 }
+
+func UpdatePesoHandler(c echo.Context) error {
+
+	peso := Peso{}
+	c.Bind(&peso)
+
+	err := updatePeso(peso.AnimalId, peso.Peso)
+	if err != nil {
+		return c.JSON(500, err)
+	}
+
+	return c.JSON(200, "Peso atualizado com sucesso.")
+}

@@ -17,4 +17,7 @@ func AddRoutes(e *echo.Echo) {
 	public.PUT("", UpdateHandler, handler.MiddlewareBindAndValidate(&Animals{}))
 	public.DELETE("/:animalId", DeleteHandler)
 
+	// Atualizar o peso do animal
+	public.PUT("", UpdatePesoHandler, handler.MiddlewareBindAndValidate(&Peso{}))
+
 }
